@@ -44,7 +44,13 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             val credential = GoogleAuthProvider.getCredential(idToken, null)
             auth.signInWithCredential(credential).addOnCompleteListener { task ->
-                onResult(task.isSuccessful)
+                if (task.isSuccessful) {
+                    // Ingreso exitoso, el usuario ha sido autenticado.
+                    onResult(true)
+                } else {
+                    // Error en el inicio de sesión.
+                    onResult(false)
+                }
                 checkUserAuthentication()
             }
         }

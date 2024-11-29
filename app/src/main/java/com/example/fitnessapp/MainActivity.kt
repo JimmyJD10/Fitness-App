@@ -1,23 +1,23 @@
 package com.example.fitnessapp
 
 import android.os.Bundle
-import android.os.Parcelable
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import com.example.fitnessapp.ui.navigation.Navigation
-import com.example.fitnessapp.ui.theme.FitnessAppTheme
+import com.example.fitnessapp.util.AppPreferences
+import kotlinx.coroutines.runBlocking
 
-class MainActivity() : ComponentActivity() {
+class MainActivity : ComponentActivity() {
+    private lateinit var appPreferences: AppPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        // Inicializar AppPreferences
+        appPreferences = AppPreferences(applicationContext)
+
         setContent {
-            FitnessAppTheme {
-                Navigation()
-            }
+            Navigation(appPreferences = appPreferences)
         }
     }
-
 }
